@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+         return User::all();
     }
 
     /**
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+          return User::find($id);
     }
 
     /**
@@ -47,6 +47,11 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+     public function search($firstname)
+    {
+        return User::where('firstname', 'like', '%' . $firstname . '%')->get();
     }
 
 

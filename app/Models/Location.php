@@ -12,4 +12,10 @@ class Location extends Model
         'name',
       
     ];
+
+
+     public function items()
+    {
+        return $this->hasMany(Item::class, 'location_id');
+    }
 }

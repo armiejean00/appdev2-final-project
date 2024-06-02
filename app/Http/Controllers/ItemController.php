@@ -57,7 +57,13 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        return Item::find($id);
+        $item = Item::find($id);
+
+        if (!$item) {
+            return response()->json(['message' => 'item not found'], 404);
+        }
+
+        return response()->json($item);
     }
 
     /**
@@ -65,8 +71,14 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
+         $item = Item::find($id);
+
+        if (!$item) {
+            return response()->json(['message' => 'item not found'], 404);
+        }
         try {
             $item = Item::findOrFail($id); // Use findOrFail to handle the case when the item is not found
+
 
             // Validate the request
             $request->validate([
@@ -116,7 +128,15 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        return Item::destroy($id);
+        $item = Item::find($id);
+
+        if (!$item) {
+            return response()->json(['message' => 'item not found'], 404);
+        }
+
+        $item->delete();
+
+        return response()->json(['message' => 'item deleted successfully']);
     }
 
     public function search($name)
@@ -128,6 +148,10 @@ class ItemController extends Controller
 {
     try {
         $item = Item::findOrFail($id);
+
+         if (!$item) {
+            return response()->json(['message' => 'Item not found'], 404);
+        }
 
         // Validate the request
         $request->validate([

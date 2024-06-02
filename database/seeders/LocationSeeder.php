@@ -15,11 +15,13 @@ class LocationSeeder extends Seeder
           $locations = [
             'Cafeteria',
             'Gazebo',
-            'Room',
+            'Rooms',
             'Library',
             'OSAS',
-            'Highway',
+            'Hallway',
             'Canteen',
+            'CR',
+            'Entrance'
         ];
 
          foreach ($locations as $location) {

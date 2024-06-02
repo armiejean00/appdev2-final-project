@@ -19,4 +19,25 @@ class Item extends Model
         // 'status',
         'users_id'
     ];
+
+
+      public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+
+    public function claimedItems()
+    {
+        return $this->hasMany(ClaimedItem::class, 'item_id');
+    }
 }

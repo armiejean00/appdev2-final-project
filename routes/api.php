@@ -5,6 +5,8 @@ use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LocationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,17 +22,44 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('register',[UserController::class,'register']);
-Route::post('login',[UserController::class,'login']);
+Route::get('/register', function () {
+    return view('register');
+});
 
-Route::get('/items',[ItemController::class,'index']);
-Route::get('/items/{id}',[ItemController::class,'show']);
-Route::get('/items/search/{name}',[ItemController::class,'search']);
+Route::get('/login', function () {
+    return view('login');
+});
 
-Route::group(['middleware' => ['auth:sanctum']],function(){
-        Route::post('/items',[ItemController::class,'store']); 
-        Route::put('/items/{id}',[ItemController::class,'update']);
-        Route::delete('/items/{id}',[ItemController::class,'destroy']);
+Route::get('/home', function () {
+    return view('home');
+});
+
+Route::post('register', [UserController::class, 'register'])->name('register');
+Route::post('login', [UserController::class, 'login'])->name('login');
+
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::get('/users/search/{firstname}', [UserController::class, 'search']);
+
+Route::get('/items', [ItemController::class, 'index']);
+Route::get('/items/{id}', [ItemController::class, 'show']);
+Route::get('/items/search/{name}', [ItemController::class, 'search']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+        
+    Route::middleware(['admin'])->group(function () {
+        Route::post('/items', [ItemController::class, 'store']);
+        Route::put('/items/{id}', [ItemController::class, 'update']);
+        Route::delete('/items/{id}', [ItemController::class, 'destroy']);
+
+        Route::apiResource('categories', CategoryController::class);
+        Route::apiResource('locations', LocationController::class);
+      
+    });
+
+    Route::middleware(['user'])->group(function () {
         Route::patch('/items/{id}/claim', [ItemController::class, 'updateStatus']);
-        Route::post('logout',[UserController::class,'logout']);
+    });
+
+     Route::post('logout', [UserController::class, 'logout']);
 });

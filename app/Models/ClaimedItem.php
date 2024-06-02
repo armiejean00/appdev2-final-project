@@ -13,13 +13,13 @@ class ClaimedItem extends Model
         'claimed_at',
     ];
 
-    public function item()
-    {
-        return $this->belongsTo(Item::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
     }
 }

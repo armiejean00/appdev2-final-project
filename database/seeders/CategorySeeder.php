@@ -12,18 +12,16 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Array of categories for lost and found items
         $categories = [
             'Electronics',
-            'Clothing',
-            'Accessories',
-            'Books',
-            'Documents',
-            'Jewelry',
-            'Toys',
-            'Tools',
-            'Sporting Goods',
-            'Miscellaneous'
+            'Textbooks',
+            'School Supplies',
+            'Library Books',
+            'School Forms',
+            'Educational Toys',
+            'Art Supplies',
+            'Sports Equipment',
+            'Tech Devices',
         ];
 
         // Insert categories into the database
