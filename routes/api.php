@@ -37,15 +37,24 @@ Route::get('/home', function () {
 Route::post('register', [UserController::class, 'register'])->name('register');
 Route::post('login', [UserController::class, 'login'])->name('login');
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::get('/users/search/{firstname}', [UserController::class, 'search']);
+// Route::get('/users', [UserController::class, 'index']);
+// Route::get('/users/{id}', [UserController::class, 'show']);
+// Route::get('/users/search/{firstname}', [UserController::class, 'search']);
 
-Route::get('/items', [ItemController::class, 'index']);
-Route::get('/items/{id}', [ItemController::class, 'show']);
-Route::get('/items/search/{name}', [ItemController::class, 'search']);
+// Route::get('/items', [ItemController::class, 'index']);
+// Route::get('/items/{id}', [ItemController::class, 'show']);
+// Route::get('/items/search/{name}', [ItemController::class, 'search']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::get('/users/search/{firstname}', [UserController::class, 'search']);
+
+    Route::get('/items', [ItemController::class, 'index']);
+    Route::get('/items/{id}', [ItemController::class, 'show']);
+    Route::get('/items/search/{name}', [ItemController::class, 'search']);
         
     Route::middleware(['admin'])->group(function () {
         Route::post('/items', [ItemController::class, 'store']);

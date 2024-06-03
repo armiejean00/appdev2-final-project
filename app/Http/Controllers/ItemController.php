@@ -139,7 +139,7 @@ class ItemController extends Controller
         return response()->json(['message' => 'item deleted successfully']);
     }
 
-    public function search($name)
+     public function search($name)
     {
         return Item::where('name', 'like', '%' . $name . '%')->get();
     }
