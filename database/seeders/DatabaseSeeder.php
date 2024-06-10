@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //    $this->call(LocationSeeder::class);
-        //     $this->call(CategorySeeder::class);
-        // \App\Models\User::factory(10)->create();
+           $this->call(LocationSeeder::class);
+            $this->call(CategorySeeder::class);
+        \App\Models\User::factory(10)->create();
 
         $this->call( ItemsSeeder::class);
     

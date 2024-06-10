@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClaimedItemController;
 use App\Http\Controllers\LocationController;
 /*
 |--------------------------------------------------------------------------
@@ -63,11 +64,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::apiResource('categories', CategoryController::class);
         Route::apiResource('locations', LocationController::class);
+
+       
       
     });
 
     Route::middleware(['user'])->group(function () {
         Route::patch('/items/{id}/claim', [ItemController::class, 'updateStatus']);
+        Route::get('/claimed-items', [ClaimedItemController::class, 'getClaimedItems']);
+
     });
 
      Route::post('logout', [UserController::class, 'logout']);

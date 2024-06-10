@@ -155,7 +155,7 @@ class ItemController extends Controller
 
         // Validate the request
         $request->validate([
-            'status' => 'required|integer|in:0,1' // assuming status is stored as an integer 0 or 1
+            'status' => 'required|integer|in:0,1' 
         ]);
 
         // Check if the item is already claimed by another user
@@ -185,10 +185,10 @@ class ItemController extends Controller
                 'claimed_at' => now(),
             ]);
 
-            // Update the users_id field on the item
+          
             $item->users_id = Auth::user()->id;
         } else {
-            // Reset the users_id field if status is not '1'
+          
             $item->users_id = null;
         }
 
@@ -208,4 +208,6 @@ class ItemController extends Controller
         ], 500);
     }
 }
+
+
 }

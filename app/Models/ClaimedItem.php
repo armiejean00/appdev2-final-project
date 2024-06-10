@@ -22,4 +22,5 @@ class ClaimedItem extends Model
     {
         return $this->belongsTo(Item::class, 'item_id');
     }
+    
 }
