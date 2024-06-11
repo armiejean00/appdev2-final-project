@@ -4,28 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
-      // List all categories
+     
     public function index()
     {
         return Category::all();
     }
 
-    // Store a new category
-    public function store(Request $request)
+ 
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+    $category = Category::create($request->all());
 
-        $category = Category::create($request->all());
-
-        return response()->json($category, 201);
+    return response()->json($category, 201);
     }
 
-    // Show a single category
+   
     public function show($id)
     {
         $category = Category::find($id);
@@ -37,25 +34,21 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
-    // Update a category
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+  
+   public function update(CategoryRequest $request, $id)
+   {
+   $category = Category::find($id);
 
-        $category = Category::find($id);
+   if (!$category) {
+   return response()->json(['message' => 'Category not found'], 404);
+   }
 
-        if (!$category) {
-            return response()->json(['message' => 'Category not found'], 404);
-        }
+   $category->update($request->all());
 
-        $category->update($request->all());
+   return response()->json($category);
+   }
 
-        return response()->json($category);
-    }
-
-    // Delete a category
+   
     public function destroy($id)
     {
         $category = Category::find($id);

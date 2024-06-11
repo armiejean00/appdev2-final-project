@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('location_id')->constrained()->cascadeOnDelete();
             $table->date('datefound');
-             $table->boolean('status')->default('0');
+             $table->boolean('status')->default('0');//0=pending, 1=claimed
              $table->unsignedBigInteger('users_id')->nullable();
            
             $table->timestamps();

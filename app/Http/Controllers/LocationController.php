@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Location;
+use App\Http\Requests\LocationRequest;
 
 class LocationController extends Controller
 {
@@ -14,16 +15,13 @@ class LocationController extends Controller
     }
 
     // Store a new location
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+   public function store(LocationRequest $request)
+   {
+   $location = Location::create($request->validated());
 
-        $location = Location::create($request->all());
+   return response()->json($location, 201);
+   }
 
-        return response()->json($location, 201);
-    }
 
     // Show a single location
     public function show($id)
@@ -38,24 +36,20 @@ class LocationController extends Controller
     }
 
     // Update a location
-    public function update(Request $request, $id)
+    public function update(LocationRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+    $location = Location::find($id);
 
-        $location = Location::find($id);
-
-        if (!$location) {
-            return response()->json(['message' => 'Location not found'], 404);
-        }
-
-        $location->update($request->all());
-
-        return response()->json($location);
+    if (!$location) {
+    return response()->json(['message' => 'location not found'], 404);
     }
 
-    // Delete a location
+    $location->update($request->all());
+
+    return response()->json($location);
+    }
+
+   
     public function destroy($id)
     {
         $location = Location::find($id);

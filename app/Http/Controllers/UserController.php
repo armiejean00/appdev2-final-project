@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\RegisterUserRequest;
 class UserController extends Controller
 {
     /**
@@ -55,15 +57,16 @@ class UserController extends Controller
     }
 
 
-        public function register(Request $request)
+        public function register(RegisterUserRequest $request)
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            //    'role' => 'required',
-        ]);
+        $validated = $request->validated();
+        // $validated = $request->validate([
+        //     'firstname' => 'required|string|max:255',
+        //     'lastname' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'required|string|min:8|confirmed',
+        //     //    'role' => 'required',
+        // ]);
 
         $user = User::create([
             'firstname' => $validated['firstname'],
@@ -83,12 +86,13 @@ class UserController extends Controller
         return response($response, 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-       $request->validate([
-        'email'=>'required|email',
-        'password'=>'required'
-       ]);
+         $request->validated();
+    //    $request->validate([
+    //     'email'=>'required|email',
+    //     'password'=>'required'
+    //    ]);
 
        if(Auth::attempt($request->all())){
         $user = User::where('email', $request->email)->first();
